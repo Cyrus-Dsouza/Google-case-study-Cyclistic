@@ -65,6 +65,7 @@ all_trips_cleaned <-mutate(all_trips_cleaned,started_at = dmy_hm(started_at),end
 all_trips_cleaned$ride_length <- difftime(all_trips_cleaned$ended_at,all_trips_cleaned$started_at,units = "min")
 
 #removing bad data
+## data contains entries where the bikes were taken for testing and to the warehouse
 all_trips_cleaned <- all_trips_cleaned[!(all_trips_cleaned$start_station_name == "Base - 2132 W Hubbard Warehouse"
                                          |all_trips_cleaned$start_station_id == "Hubbard Bike-checking (LBS-WH-TEST)"
                                          |all_trips_cleaned$start_station_name == "WATSON TESTING - DIVVY"
@@ -83,11 +84,4 @@ ride_length<-aggregate(ride_length~member_casual,all_trips_cleaned,FUN=mean)
 ride_length_by_month<-aggregate(ride_length~member_casual+month,all_trips_cleaned,FUN=mean)
 ride_length_by_day<-aggregate(ride_length~member_casual+day_of_week,all_trips_cleaned,FUN=mean)
 
-write.csv(all_trips,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/all trips raw.csv")
-write.csv(ride_length,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/ride length.csv")
-write.csv(all_trips_cleaned,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/all trips cleaned.csv")
-write.csv(riders_summary,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/riders summary.csv")
-write.csv(bike_type,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/bike type.csv")
-write.csv(ride_length_by_month,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/ride length monthly.csv")
-write.csv(ride_length_by_day,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/ride length by day.csv")
-write.csv(riders_summary_day,file = "D:/Cyrus/PROJECTS/Cyclistic/dataframe/riders summary by day.csv")
+#exported dataframes using write.csv()
